@@ -1,0 +1,25 @@
+{
+    "name": "topolis/filter",
+    "description": "A flexible filter system for untrusted values",
+    "type": "library",
+    "keywords": [
+        "library",
+        "topolis",
+        "security",
+        "filtering"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ToBe998",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload" : {
+        "psr-4" : {
+            "Topolis\\Filter\\" : "src"
+        }
+    }
+}
