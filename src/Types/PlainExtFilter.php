@@ -32,7 +32,7 @@ class PlainExtFilter implements IFilterType {
     
     protected static $charactersets = array(self::BASIC  => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
                                             self::SIMPLE => ",.:\\-_()?! ",
-                                            self::GERMAN => "äöüÄÖÜ",
+                                            self::GERMAN => "äöüÄÖÜß",
                                             self::FRENCH => "áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛ");
     
     protected $defaults = array("characters" => "", "characterset" => self::INTERNATIONAL);
@@ -44,7 +44,7 @@ class PlainExtFilter implements IFilterType {
      */
     public function __construct($options = array()) {
         $this->options = $options + $this->defaults;
-        
+
         foreach(self::$charactersets as $bit => $characters)
             if((int)$this->options["characterset"] & $bit)
                 $this->options["characters"] .= $characters;
@@ -57,7 +57,7 @@ class PlainExtFilter implements IFilterType {
      */    
     public function filter($value) {
         mb_internal_encoding("UTF-8");
-        mb_regex_encoding("UTF-8");        
+        mb_regex_encoding("UTF-8");
         return mb_ereg_replace('[^'.$this->options["characters"].']', "", $value);
     }
 
