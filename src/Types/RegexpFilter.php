@@ -7,7 +7,7 @@ namespace Topolis\Filter\Filters;
 
 use Topolis\Filter\Filter;
 use Topolis\Filter\FilterException;
-use Topolis\Filter\IFilter;
+use Topolis\Filter\IFilterType;
 
 /**
  * RegexpFilter
