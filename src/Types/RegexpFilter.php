@@ -3,7 +3,7 @@
  * @package    SecureInput
  */
 
-namespace Topolis\Filter\Filters;
+namespace Topolis\Filter\Types;
 
 use Topolis\Filter\Filter;
 use Topolis\Filter\FilterException;
