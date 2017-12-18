@@ -54,8 +54,23 @@ Validates or returns a formatted date-time string.
 - **timezone** The timezone to use or `false` if none. Default: `false`
 
 ### Email
+Validates or filters a email value. (No options)
+
+### Enum
+Allow only values from a fixed set of options.
+
+**Options**
+- **values** An array of allowed values. Default: `[]`
+- **strict** Allowed values must also have the matching type. default: `false`
+- **insensitive** Allow case insensitive checks for strings. Default `false`
+- **autocorrect** Return the matching value from the allowed array on a successfull match (possibly correcting wrong types and cases). Default: `true`
 
 ### Json
+Validate and optionally unserialize a inpout string with a JSON value.
+
+**Options**
+- **format** An array of allowed values. Default: `[]`
+
 
 ### Money
 
