@@ -39,7 +39,7 @@ class EnumFilter implements IFilterType {
 
         // Make test values lowercase if insensitive
         if($this->options["insensitive"]) {
-            array_walk($this->enumeration, function(&$item, $key){
+            array_walk($this->enumeration, function(&$item){
                $item = strtolower($item);
             });
         }

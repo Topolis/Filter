@@ -11,7 +11,6 @@
 namespace Topolis\Filter\Types;
 
 use Topolis\Filter\Filter;
-use Topolis\Filter\FilterException;
 use Topolis\Filter\IFilterType;
 use \Exception;
 use \DateTime;

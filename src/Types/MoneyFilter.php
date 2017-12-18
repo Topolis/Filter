@@ -5,7 +5,6 @@
 
 namespace Topolis\Filter\Types;
 use Topolis\Filter\IFilterType;
-use Topolis\Filter\Filters\NumberFilter;
 
 /**
  * MoneyFilter
