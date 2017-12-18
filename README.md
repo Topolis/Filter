@@ -40,8 +40,18 @@ identical to the first part of it's class name lowercase. (Example: "plain" mean
 "PlainFilter.php".
 
 ### Boolean
+Filters a value and returns it as a boolean value of true or false
+
+**Options**
+- **true** an array of values that are treated as `true`. Default: `[ 1, "true", true ]`
+- **strict** Only allow exactly the allowed values for the true option above and `false` if not. Otherwise a simple cast to boolean is also enough.
 
 ### DataTime
+Validates or returns a formatted date-time string.
+
+**Options**
+- **format** the format to return datetime values in. Default: `Y-m-d H:i:s`
+- **timezone** The timezone to use or `false` if none. Default: `false`
 
 ### Email
 
