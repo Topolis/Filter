@@ -120,9 +120,28 @@ A text filter, that allows certain characters, with preconfigured selectable cha
     - **15** - ALL: all of the above
 
 ### Plain
+A simple text filter that only allows basic letters and numbers (A-Z a-z 0-9).
 
 ### Regexp
+A filter that validates according to a regular expession.
+
+**Options**
+- **pattern** The regular expression to use by `preg_match`. Example: `/(dog|horse)shit$/i`
 
 ### Strip
+A text filter that strips out html tags.
+
+**Options**
+- **allowable_tags** allowed tags. Only opening tags need to be specified. (See: http://php.net/manual/en/function.strip-tags.php)
+- **preserve_null** return `null` instead of an empty string if the input string was `null`. Default: `false`
+
+### Test
+A simple filter usable for unit tests. It tests input against one or more expected values.
+
+**Options**
+- **expected** One value or an array of values. Default: `null`
+- **error** Return this value in case of an invalid input. Default: The normal behaviour of filters
+- **strict** Check input with a type strict comparison.
 
 ### Url
+Check if input is a valid URL according to `filter_var($value, FILTER_VALIDATE_URL)`.
