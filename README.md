@@ -69,12 +69,25 @@ Allow only values from a fixed set of options.
 Validate and optionally unserialize a inpout string with a JSON value.
 
 **Options**
-- **format** An array of allowed values. Default: `[]`
-
+- **format** return the input in one of the following formats
+-- *1* - JSON: Return untouched as the validated json string
+-- *2* - DECODED: Return the decoded result as a multi dimensional array (not as stdClass objects)
+-- *3* - SERIALIZED: return the input values as a php serialized string
 
 ### Money
+This filter is a shorthand version of the number filter. It is preconfigured with defaults usable for money.
+(See @Number for options)
 
 ### Number
+Filter or validate numbers with or without decimals. Note: The result will be a `double`, regardless of decimal counts.
+
+**Options**
+- **min** Value has to be a minimum of X. Default: `false`
+- **max** Value has to be a maximum of X. default: `false`
+- **adjust** If a min/max is specified, allow the number to be sanitized to this if needed. Default `false`
+- **decimals** Round the result to this number of decimals. Default: `false`
+- **round** Method to use when rounding. One of round, floor or ceil. This method will use bc library for rounding to avoid floar errors. default: `round`
+- **validate** Fail if value was not a valid Number as defined in options. default: `false`
 
 ### Passthrough
 
