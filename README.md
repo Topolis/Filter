@@ -90,10 +90,34 @@ Filter or validate numbers with or without decimals. Note: The result will be a 
 - **validate** Fail if value was not a valid Number as defined in options. default: `false`
 
 ### Passthrough
+This filter allows any input without modification. Be carefull!
+
+**Options**
+- **append** append this fixed string to the input value. (This will fail validation though, as input differs from output.)
 
 ### Path
+A shorthand version of the PlainExt filter, preconfigured to allow any character usable in a file path.
+
+**Options**
+- **characters** Additional valid characters apart from the ones from selected charactersets. Default: none
+- **charactersets** Charactersets to use. A combination can be used by adding the numbers:
+-- **1** - BASIC: `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890._-`
+-- **2** - WINDOWS: `\`
+-- **4** - UNIT: `/`
+-- **7** - ALL: all of the above
 
 ### PlainExt
+A text filter, that allows certain characters, with preconfigured selectable charactersets.
+
+**Options**
+- **characters** Additional valid characters apart from the ones from selected charactersets. Default: none
+- **charactersets** Charactersets to use. A combination can be used by adding the numbers:
+-- **1** - BASIC: `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`
+-- **2** - SIMPLE: `,.:-_()?! `
+-- **4** - GERMAN: `äöüÄÖÜß`
+-- **8** - FRENCH: `áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛ`
+-- **13** - INTERNATIONAL: Basic + German + French
+-- **15** - ALL: all of the above
 
 ### Plain
 
