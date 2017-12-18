@@ -70,9 +70,9 @@ Validate and optionally unserialize a inpout string with a JSON value.
 
 **Options**
 - **format** return the input in one of the following formats
--- *1* - JSON: Return untouched as the validated json string
--- *2* - DECODED: Return the decoded result as a multi dimensional array (not as stdClass objects)
--- *3* - SERIALIZED: return the input values as a php serialized string
+    - *1* - JSON: Return untouched as the validated json string
+    - *2* - DECODED: Return the decoded result as a multi dimensional array (not as stdClass objects)
+    - *3* - SERIALIZED: return the input values as a php serialized string
 
 ### Money
 This filter is a shorthand version of the number filter. It is preconfigured with defaults usable for money.
@@ -101,10 +101,10 @@ A shorthand version of the PlainExt filter, preconfigured to allow any character
 **Options**
 - **characters** Additional valid characters apart from the ones from selected charactersets. Default: none
 - **charactersets** Charactersets to use. A combination can be used by adding the numbers:
--- **1** - BASIC: `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890._-`
--- **2** - WINDOWS: `\`
--- **4** - UNIT: `/`
--- **7** - ALL: all of the above
+    - **1** - BASIC: `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890._-`
+    - **2** - WINDOWS: `\`
+    - **4** - UNIT: `/`
+    - **7** - ALL: all of the above
 
 ### PlainExt
 A text filter, that allows certain characters, with preconfigured selectable charactersets.
@@ -112,12 +112,12 @@ A text filter, that allows certain characters, with preconfigured selectable cha
 **Options**
 - **characters** Additional valid characters apart from the ones from selected charactersets. Default: none
 - **charactersets** Charactersets to use. A combination can be used by adding the numbers:
--- **1** - BASIC: `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`
--- **2** - SIMPLE: `,.:-_()?! `
--- **4** - GERMAN: `äöüÄÖÜß`
--- **8** - FRENCH: `áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛ`
--- **13** - INTERNATIONAL: Basic + German + French
--- **15** - ALL: all of the above
+    - **1** - BASIC: `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`
+    - **2** - SIMPLE: `,.:-_()?! `
+    - **4** - GERMAN: `äöüÄÖÜß`
+    - **8** - FRENCH: `áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛ`
+    - **13** - INTERNATIONAL: Basic + German + French
+    - **15** - ALL: all of the above
 
 ### Plain
 
