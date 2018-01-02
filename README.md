@@ -166,9 +166,10 @@ A simple filter usable for unit tests. It tests input against one or more expect
 - **strict** Check input with a type strict comparison.
 
 ### Url
-Check if input is a valid URL according to `filter_var($value, FILTER_VALIDATE_URL)`.
+Check if input is a valid URL according to the parse_url method and configurable checks.
 
-## Open Bugs
-- Integer filter (easier number filter for integers)
-- PlainExt filter needs to escape special characters in regular expressions (ex: -.)
-- Url filter options to check for relative or absolute paths
+**Options**
+- **require** Array of required url elements. One or more of (scheme, host, port, user, pass, root, path, query, fragment). Default: `[]`
+- **disallow** Array of disallowed url elements. One or more of (scheme, host, port, user, pass, root, path, query, fragment). Default: `[]`
+- **schemes** Array of allowed schemes if a scheme is found. Default: `["http","https"]`
+- **type** Short hand definitions for above options. One of (absolute, relative, root). Default: `false`
