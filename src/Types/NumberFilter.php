@@ -78,14 +78,14 @@ class NumberFilter implements IFilterType {
             (!$this->options["adjust"] && $value > $this->options["max"]) ) {
             return Filter::ERR_INVALID;
         }
-        
+
         //Validate decimal count
-        if($this->options["decimals"] !== false && 
-           $this->options["round"] === false &&
-           strlen($value) - strpos($value,".") - 1 > $this->options["decimals"]) {
-            return Filter::ERR_INVALID;
+        if($this->options["decimals"] !== false && $this->options["round"] === false) {
+            $decimalcount = strpos($value,".") !== false ? strlen($value) - strpos($value,".") - 1 : 0;
+            if($decimalcount != $this->options["decimals"])
+                return Filter::ERR_INVALID;
         }
-        
+
         // Adjust values to Min/Max
         if($this->options["adjust"] && $this->options["min"] !== false) {
             $value = max($this->options["min"], $value);

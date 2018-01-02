@@ -113,6 +113,24 @@ class NumberFilterTest extends PHPUnit_Framework_TestCase {
         $this->Filter = new NumberFilter(array("decimals" => 3, "round" => false));
         $this->assertEquals(Filter::ERR_INVALID, $this->Filter->filter("32.12345"));
         $this->assertEquals(32.123, $this->Filter->filter("32.123"));
-    }      
-    
+    }
+
+    /*
+     */
+    public function testExecute_Integer() {
+        $this->Filter = new NumberFilter(array("decimals" => 0));
+        $this->assertEquals(32, $this->Filter->filter("32.12345"));
+
+        $this->Filter = new NumberFilter(array("decimals" => 0));
+        $this->assertEquals(32, $this->Filter->filter(32));
+
+        $this->Filter = new NumberFilter(array("decimals" => 0, "round" => false));
+        $this->assertEquals(32, $this->Filter->filter(32));
+
+        $this->Filter = new NumberFilter(array("decimals" => 0, "round" => false));
+        $this->assertEquals(Filter::ERR_INVALID, $this->Filter->filter("32.12345"));
+        $this->assertEquals(32, $this->Filter->filter(32));
+    }
+
+
 }

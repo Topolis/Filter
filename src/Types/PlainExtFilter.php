@@ -58,7 +58,10 @@ class PlainExtFilter implements IFilterType {
     public function filter($value) {
         mb_internal_encoding("UTF-8");
         mb_regex_encoding("UTF-8");
-        return mb_ereg_replace('[^'.$this->options["characters"].']', "", $value);
+
+        $pattern = '[^'.preg_quote($this->options["characters"]).']';
+
+        return mb_ereg_replace($pattern, "", $value);
     }
 
     /**

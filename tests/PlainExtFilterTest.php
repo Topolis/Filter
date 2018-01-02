@@ -70,5 +70,28 @@ class PlainExtFilterTest extends PHPUnit_Framework_TestCase {
 
         $this->Filter = new PlainExtFilter(array("characterset" => PlainExtFilter::INTERNATIONAL));
         $this->assertEquals($all, $this->Filter->filter($input), "International"); 
-    }    
+    }
+
+    public function testRegexpChars() {
+
+        // Dash
+        $this->Filter = new PlainExtFilter(array("characterset" => 0, "characters" => "12345-"));
+        $this->assertEquals("34-21-5", $this->Filter->filter("3b4-2a1-5"), "Dash");
+
+        // Dot
+        $this->Filter = new PlainExtFilter(array("characterset" => 0, "characters" => "123456."));
+        $this->assertEquals("34.21.5", $this->Filter->filter("3b4.2a1.5"), "Dot");
+
+        // Space
+        $this->Filter = new PlainExtFilter(array("characterset" => 0, "characters" => "123456 "));
+        $this->assertEquals("34 21 5", $this->Filter->filter("3b4 2a1 5"), "Space");
+
+        // Not a char range
+        $this->Filter = new PlainExtFilter(array("characterset" => 0, "characters" => "12-56"));
+        $this->assertEquals("1-25-6", $this->Filter->filter("1-2345-6"), "Char range");
+
+        // Not a non-space
+        $this->Filter = new PlainExtFilter(array("characterset" => 0, "characters" => "123\\S456"));
+        $this->assertEquals("1S23456", $this->Filter->filter("1Sa2b,34-56"), "Non-space");
+    }
 }
