@@ -167,3 +167,8 @@ A simple filter usable for unit tests. It tests input against one or more expect
 
 ### Url
 Check if input is a valid URL according to `filter_var($value, FILTER_VALIDATE_URL)`.
+
+## Open Bugs
+- Integer filter (easier number filter for integers)
+- PlainExt filter needs to escape special characters in regular expressions (ex: -.)
+- Url filter options to check for relative or absolute paths
