@@ -21,6 +21,13 @@ class Filter {
     
     const ERR_NONEXISTANT    = "sinonexistant";
     const ERR_INVALID        = "siinvalid";
+
+    const TYPE_SINGLE        = "single";
+    const TYPE_ARRAY         = "array";
+    const TYPE_TREE          = "tree";
+    const TYPE_ANY           = "any";
+
+    const TYPE_DEFAULT = self::TYPE_ANY;
     
     /**
      * Constructor
@@ -39,8 +46,9 @@ class Filter {
      * @return mixed                   filtered data
      */
     public static function validate($input, $filter = "plain", $options = []) {
+        $type = isset($options["type"]) ? $options["type"] : self::TYPE_DEFAULT;
         $queue = self::loadFilters($filter, $options);
-        return self::execValidateQueue($input, $queue);
+        return self::execValidateQueue($input, $queue, $type);
     }
 
     /**
@@ -54,9 +62,9 @@ class Filter {
      * @return mixed                   filtered data
      */
     public static function filter($input, $filter = "Plain", $options = []) {
-
+        $type = isset($options["type"]) ? $options["type"] : self::TYPE_DEFAULT;
         $queue = self::loadFilters($filter, $options);
-        return self::execFilterQueue($input, $queue);
+        return self::execFilterQueue($input, $queue, $type);
     }    
     
     /**
@@ -81,7 +89,7 @@ class Filter {
             $classname = __NAMESPACE__."\\Types\\".preg_replace("/[^A-z0-9]/", "", ucfirst($filtername))."Filter";
 
             if(!class_exists($classname))
-                throw new FilterException("Filter class not found");
+                throw new FilterException("Filter class '$filtername' not found");
             
             $filter = new $classname($options[$idx]);
             
@@ -93,16 +101,17 @@ class Filter {
 
         return $queue;
     }
-    
+
     /**
      * execute filter queue on a value
-     * @param mixed $value               unfiltered value
-     * @param IFilterType[] $queue       array of instantiated filter objects
-     * @return mixed                     either filtered value or self::ERR_INVALID
+     * @param mixed $value unfiltered value
+     * @param IFilterType[] $queue array of instantiated filter objects
+     * @param $type
+     * @return mixed either filtered value or self::ERR_INVALID
      */
-    protected static function execFilterQueue($value, array $queue) {
+    protected static function execFilterQueue($value, array $queue, $type) {
         foreach($queue as $filter) {
-            $value = self::execFilter($value, $filter);
+            $value = self::executeValueMethod($value, $filter, $type, "filter");
 
             if($value === self::ERR_INVALID)
                 return false;
@@ -110,31 +119,16 @@ class Filter {
         return $value;
     }
 
-    /**
-     * Execute a filter on a value (recursively if it's an array)
-     * @param $value
-     * @param IFilterType $filter
-     * @return array|mixed
-     */
-    protected static function execFilter($value, IFilterType $filter) {
-        if(is_array($value)){
-            foreach($value as $idx => $item)
-                $value[$idx] = self::execFilter($item, $filter);
-            return $value;
-        }
-
-        return $filter->filter($value);
-    }
-    
     /**
      * execute filters on value
-     * @param mixed $value               unfiltered value
-     * @param IFilterType[] $queue               array of instantiated filter objects
-     * @return mixed                     either filtered value or self::ERR_INVALID
+     * @param mixed $value unfiltered value
+     * @param IFilterType[] $queue array of instantiated filter objects
+     * @param $type
+     * @return mixed either filtered value or self::ERR_INVALID
      */
-    protected function execValidateQueue($value, array $queue) {
+    protected static function execValidateQueue($value, array $queue, $type) {
         foreach($queue as $filter) {
-            $value = self::execValidate($value, $filter);
+            $value = self::executeValueMethod($value, $filter, $type, "validate");
 
             if($value === self::ERR_INVALID)
                 return false;
@@ -142,22 +136,34 @@ class Filter {
         return $value;
     }
 
-    /**
-     * @param $value
-     * @param IFilterType $filter
-     * @return array|string
-     */
-    protected function execValidate($value, IFilterType $filter) {
+    protected static  function executeValueMethod($value, $filter, $type, $method, $level = 0) {
+
+        // Array/Tree of values
         if(is_array($value)){
+
+            if($type === self::TYPE_SINGLE) // type single expects single value
+                return self::ERR_INVALID;
+
+            if($type === self::TYPE_ARRAY && $level > 0) // type array expects single value after first level
+                return self::ERR_INVALID;
+
             foreach($value as $idx => $item){
-                $value[$idx] = self::execValidate($item, $filter);
+                $value[$idx] = self::executeValueMethod($item, $filter, $type, $method, $level+1);
                 if($value[$idx] === self::ERR_INVALID)
                     return self::ERR_INVALID;
             }
+            return $value;
         }
-        else
-            $value = $filter->validate($value);
-            
-        return $value;
-    }    
+
+        // Single value
+        if($type === self::TYPE_TREE && $level == 0) // type tree expects array at least at first level
+            return self::ERR_INVALID;
+
+        if($type === self::TYPE_ARRAY && $level == 0) // type array expects array at first level
+            return self::ERR_INVALID;
+
+        // Execute method
+        return $filter->$method($value);
+
+    }
 }

@@ -56,6 +56,20 @@ You can use multiple filters and options in a queue and pass your value through 
 $value = Filter::filter($value, ["plain","strip","number], [ ["options" => "params"], ["options" => "params"], ["options" => "params"]]);
 ```
 
+## Using multiple values
+You can use an array or multi-dimensional array of values with your filters and options. The test will be appied to the non-array values inside the array.
+Depending on the `type` option, the value has to be of this nature:
+
+- `tree` a multidimensional array of at least one level of depth of values
+- `array` an array of values
+- `single` A single value
+
+If no type is specified, anything is valid.
+
+```
+$value = Filter::filter($value, $filter, ["type" => single]);
+```
+
 ## Available Filters
 You can specify any of the following filters for Filter. The name of the filter allways is 
 identical to the first part of it's class name lowercase. (Example: "plain" means class "PlainFilter" in file 
