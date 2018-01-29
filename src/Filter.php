@@ -46,7 +46,7 @@ class Filter {
      * @return mixed                   filtered data
      */
     public static function validate($input, $filter = "plain", $options = []) {
-        $type = isset($options["type"]) ? $options["type"] : self::TYPE_DEFAULT;
+        $type = isset($options["type"]) ? $options["type"] : static::TYPE_DEFAULT;
         $queue = self::loadFilters($filter, $options);
         return self::execValidateQueue($input, $queue, $type);
     }
@@ -62,7 +62,7 @@ class Filter {
      * @return mixed                   filtered data
      */
     public static function filter($input, $filter = "Plain", $options = []) {
-        $type = isset($options["type"]) ? $options["type"] : self::TYPE_DEFAULT;
+        $type = isset($options["type"]) ? $options["type"] : static::TYPE_DEFAULT;
         $queue = self::loadFilters($filter, $options);
         return self::execFilterQueue($input, $queue, $type);
     }    
