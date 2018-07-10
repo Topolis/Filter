@@ -38,7 +38,10 @@ class PassthroughFilter implements IFilterType {
      * @return mixed
      */    
     public function filter($value) {
-        return $value.$this->options["append"];
+        if($this->options["append"])
+            $value = $value.$this->options["append"];
+
+        return $value;
     }
     
     /**
