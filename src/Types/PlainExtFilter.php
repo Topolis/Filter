@@ -25,15 +25,14 @@ class PlainExtFilter implements IFilterType {
     const BASIC         = 1;
     const SIMPLE        = 2;    
     const GERMAN        = 4;
-    const FRENCH        = 8;
+    const FRENCH        = 4;
     
-    const INTERNATIONAL = 13;
+    const INTERNATIONAL = 4;
     const ALL           = 15;
     
     protected static $charactersets = array(self::BASIC  => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
                                             self::SIMPLE => ",.:\\-_()?! ",
-                                            self::GERMAN => "äöüÄÖÜß",
-                                            self::FRENCH => "áéíóúàèìòùâêîôûÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛ");
+                                            self::INTERNATIONAL => "\p{L}\p{N}");
     
     protected $defaults = array("characters" => "", "characterset" => self::INTERNATIONAL);
     protected $options = array();
@@ -44,6 +43,7 @@ class PlainExtFilter implements IFilterType {
      */
     public function __construct($options = array()) {
         $this->options = $options + $this->defaults;
+        $this->options["characters"] = preg_quote($this->options["characters"], '/');
 
         foreach(self::$charactersets as $bit => $characters)
             if((int)$this->options["characterset"] & $bit)
@@ -59,7 +59,7 @@ class PlainExtFilter implements IFilterType {
         mb_internal_encoding("UTF-8");
         mb_regex_encoding("UTF-8");
 
-        $pattern = '[^'.preg_quote($this->options["characters"]).']';
+        $pattern = '[^'.$this->options["characters"].']';
 
         return mb_ereg_replace($pattern, "", $value);
     }
