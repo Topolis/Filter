@@ -173,6 +173,10 @@ class UrlFilterTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(Filter::ERR_INVALID, $filter->validate("hello/world"));
         $this->assertEquals(Filter::ERR_INVALID, $filter->validate("/hello/world"));
         $this->assertNotEquals(Filter::ERR_INVALID, $filter->validate("http://www.test.de/hello/world"));
+        $this->assertNotEquals(Filter::ERR_INVALID, $filter->validate("http://www.test.de"));
+        $this->assertNotEquals(Filter::ERR_INVALID, $filter->validate("http://www.test.de/"));
+        $this->assertNotEquals(Filter::ERR_INVALID, $filter->validate("http://www.test.de?hello=world"));
+        $this->assertNotEquals(Filter::ERR_INVALID, $filter->validate("http://www.test.de?hello"));
 
         // relative
         $filter = new UrlFilter(["type" => "relative"]);

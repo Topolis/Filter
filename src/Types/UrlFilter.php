@@ -46,7 +46,7 @@ class UrlFilter implements IFilterType {
 
         // example: //www.hello.com/world/something.html
         if($this->options["type"] == "absolute"){
-            $this->options["require"] = array_merge($this->options["require"], ["host", "root", "path"]);
+            $this->options["require"] = array_merge($this->options["require"], ["host", "root"]);
         }
         // example: /world/something.html
         else if($this->options["type"] == "root"){
@@ -85,8 +85,8 @@ class UrlFilter implements IFilterType {
         if(!$parts)
             return Filter::ERR_INVALID;
 
-        // add special root element
-        if(isset($parts["path"]) && strpos($parts["path"], "/") === 0)
+        // add special root element if path is a root path
+        if( (isset($parts["path"]) && strpos($parts["path"], "/") === 0) || !isset($parts["path"]) )
             $parts["root"] = true;
 
         // required parts present ?
